@@ -1,0 +1,18 @@
+version: "3.7"
+services:
+  jenkins:
+    image: dan05011991/jenkins:2.238-centos-1
+    privileged: true
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - /var/jenkins_home:/var/jenkins_home:z
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /root/.ssh:/root/.ssh
+    networks:
+      - jenkins
+volumes:
+  db-data:
+networks:
+  jenkins:
