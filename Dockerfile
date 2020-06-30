@@ -1,5 +1,5 @@
-ARG DOCKER_IMAGE=docker:19.03-git
-ARG JENKINS_IMAGE=jenkins/jenkins:2.238-centos
+ARG DOCKER_IMAGE=docker:1.10.3-git
+ARG JENKINS_IMAGE=jenkins/jenkins:2.219-centos
 
 FROM $DOCKER_IMAGE
 FROM $JENKINS_IMAGE
