@@ -5,15 +5,13 @@ services:
     image: dan05011991/jenkins:latest
     privileged: true
     ports:
-      - "8080:8080"
+      - "8443:8443"
       - "50000:50000"
     volumes:
       - ./certs/server.crt:/var/lib/jenkins/cert
       - ./certs/server.key:/var/lib/jenkins/pk
       - ./certs/keystore.jks:/var/lib/jenkins/keystore
-      - /var/jenkins_home:/var/jenkins_home:z
       - /var/run/docker.sock:/var/run/docker.sock
-      - /root/.ssh:/root/.ssh
     networks:
       - jenkins
 volumes:
