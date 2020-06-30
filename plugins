@@ -47,6 +47,8 @@ docker-commons:1.16
 docker-workflow:1.23
 durable-task:1.33
 email-ext:2.69
+extended-choice-parameter:0.78
+extensible-choice-parameter:1.6.0
 external-monitor-job:1.7
 favorite:2.3.2
 folder-auth:1.2
@@ -104,6 +106,7 @@ role-strategy:2.16
 scm-api:2.6.3
 script-security:1.73
 skip-notifications-trait:1.0.5
+sqlplus-script-runner:2.0.12
 sse-gateway:1.23
 ssh-agent:1.19
 ssh-credentials:1.18.1

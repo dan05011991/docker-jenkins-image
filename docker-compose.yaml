@@ -8,6 +8,7 @@ services:
       - "8443:8443"
       - "50000:50000"
     volumes:
+      - ./jobs:/var/jenkins_home/jobs
       - ./certs/server.crt:/var/lib/jenkins/cert
       - ./certs/server.key:/var/lib/jenkins/pk
       - ./certs/keystore.jks:/var/lib/jenkins/keystore
