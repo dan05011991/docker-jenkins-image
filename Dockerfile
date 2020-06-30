@@ -43,4 +43,14 @@ RUN wget https://download.oracle.com/otn_software/linux/instantclient/19600/orac
 RUN rpm -ivh /tmp/sqlplus.rpm
 RUN rm -f /tmp/sqlplus.rpm
 
+#Plugin setup
+COPY plugins /usr/share/jenkins/plugins
+RUN /usr/local/bin/install-plugins.sh < /usr/share/jenkins/plugins
+
+# Startup scripts
+COPY init-scripts/*.groovy /usr/share/jenkins/ref/init.groovy.d/
+
+# Run opts
+ENV JAVA_OPTS -Djenkins.install.runSetupWizard=false
+ENV JENKINS_OPTS --httpPort=-1 --httpsPort=8443 --httpsKeyStore="/var/lib/jenkins/keystore" --httpsKeyStorePassword="runescape"
  
