@@ -44,6 +44,7 @@ RUN rpm -ivh /tmp/sqlplus.rpm
 RUN rm -f /tmp/sqlplus.rpm
 
 #Plugin setup
+ENV JENKINS_UC https://updates.jenkins-ci.org/download
 COPY plugins /usr/share/jenkins/plugins
 RUN /usr/local/bin/install-plugins.sh < /usr/share/jenkins/plugins
 

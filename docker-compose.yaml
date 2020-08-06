@@ -3,6 +3,8 @@ services:
   jenkins:
     build: .
     image: dan05011991/jenkins:latest
+    env_file:
+      - .env
     privileged: true
     ports:
       - "8443:8443"

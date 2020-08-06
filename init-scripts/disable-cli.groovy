@@ -1,24 +1,36 @@
-/*
- * Disable Jenkins CLI.
- * This init script for Jenkins fixes a zero day vulnerability.
- * http://jenkins-ci.org/content/mitigating-unauthenticated-remote-code-execution-0-day-jenkins-cli
- * https://github.com/jenkinsci-cert/SECURITY-218
- */
-import jenkins.*
+import jenkins.AgentProtocol
+import jenkins.model.Jenkins
+import hudson.model.RootAction
 
-// Constants
-def instance = Jenkins.getInstance()
+//determined if changes were made
+configChanged = false
 
-def gitGlobalConfigName = env['GIT_GLOBAL_CONFIG_NAME']
-def gitGlobalConfigEmail = env['GIT_GLOBAL_CONFIG_EMAIL']
+// disabled CLI access over TCP listener (separate port)
+def p = AgentProtocol.all()
+p.each { x ->
+    if(x.name && x.name.contains("CLI")) {
+        //println "remove ${x}"
+        p.remove(x)
+        configChanged = true
+    }
+}
 
-println "--> disabling the Jenkins CLI"
-CLI.get().setEnabled(false)
+// disable CLI access over /cli URL
+def removal = { lst ->
+    lst.each { x ->
+        if(x.getClass().name.contains("CLIAction")) {
+            //println "remove ${x}"
+            lst.remove(x)
+            configChanged = true
+        }
+    }
+}
+def j = Jenkins.instance;
+removal(j.getExtensionList(RootAction.class))
+removal(j.actions)
 
-// Git Identity
-println "--> Configuring Git Identity"
-def desc_git_scm = instance.getDescriptor("hudson.plugins.git.GitSCM")
-desc_git_scm.setGlobalConfigName(gitGlobalConfigName)
-desc_git_scm.setGlobalConfigEmail(gitGlobalConfigEmail)
-
-instance.save()
+if(configChanged) {
+    println 'Jenkins CLI has been disabled.'
+} else {
+    println 'Nothing changed. Jenkins CLI already disabled.'
+}

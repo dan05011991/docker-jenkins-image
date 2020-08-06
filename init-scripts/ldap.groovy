@@ -18,7 +18,7 @@ def strategy = new hudson.security.ProjectMatrixAuthorizationStrategy()
 // NOW TIME TO CONFIGURE GLOBAL SECURITY
 def hudsonRealm = new HudsonPrivateSecurityRealm(false)
 //  sample LDAP setup
-String server = 'ldap://data.danieljamesfoley.co.uk'
+String server = 'ldap://projectshadow'
 String rootDN = 'dc=example,dc=org'
 String userSearchBase = ''
 String userSearch = 'uid={0}'
@@ -41,6 +41,7 @@ SecurityRealm ldap_realm = new LDAPSecurityRealm(server, rootDN, userSearchBase,
 instance.setAuthorizationStrategy(strategy)
 instance.setSecurityRealm(ldap_realm)
 
+strategy.add(Jenkins.ADMINISTER, "admin")
 strategy.add(Jenkins.ADMINISTER, "dan")
 strategy.add(Jenkins.ADMINISTER, "bill")
 strategy.add(Jenkins.READ, "49ers")
